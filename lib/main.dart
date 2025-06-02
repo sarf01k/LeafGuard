@@ -1,10 +1,20 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:leafguard/screens/capture_screen.dart';
 import 'package:leafguard/screens/history_screen.dart';
 import 'package:leafguard/screens/home_screen.dart';
 
 void main() {
-  runApp(LeafGuard());
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+    ),
+  );
+  runApp(const LeafGuard());
 }
 
 class LeafGuard extends StatelessWidget {
@@ -40,27 +50,61 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
+  void _openCamera() async {
+    final picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.camera);
+
+    if (image != null) {
+      // You now have the photo. For example, display it or send it somewhere:
+      File photo = File(image.path);
+      print("Captured image path: ${photo.path}");
+
+      // Example: show it in a dialog
+      showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: const Text('Captured Image'),
+          content: Image.file(photo),
+        ),
+      );
+    } else {
+      print('Camera cancelled');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _screens[_selectedIndex],
-      bottomNavigationBar: Theme(
-      data: Theme.of(context).copyWith(
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
+      floatingActionButton: FloatingActionButton(
+        onPressed: _openCamera,
+        backgroundColor: Colors.green,
+        child: const Icon(Icons.camera_alt),
       ),
-      child: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        selectedItemColor: Colors.green,
-        unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
-        ],
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 8.0,
+        child: SizedBox(
+          height: 40,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              IconButton(
+                icon: Icon(Icons.home,
+                    color: _selectedIndex == 0 ? Colors.green : Colors.grey),
+                onPressed: () => _onItemTapped(0),
+              ),
+              const SizedBox(width: 40),
+              IconButton(
+                icon: Icon(Icons.history,
+                    color: _selectedIndex == 2 ? Colors.green : Colors.grey),
+                onPressed: () => _onItemTapped(2),
+              ),
+            ],
+          ),
+        ),
       ),
-    ),
     );
   }
 }
