@@ -1,11 +1,10 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:leafguard/screens/capture_screen.dart';
 import 'package:leafguard/screens/history_screen.dart';
 import 'package:leafguard/screens/home_screen.dart';
+import 'package:leafguard/services/image_service.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -50,59 +49,41 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
-  void _openCamera() async {
-    final picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.camera);
-
-    if (image != null) {
-      // You now have the photo. For example, display it or send it somewhere:
-      File photo = File(image.path);
-      print("Captured image path: ${photo.path}");
-
-      // Example: show it in a dialog
-      showDialog(
-        context: context,
-        builder: (_) => AlertDialog(
-          title: const Text('Captured Image'),
-          content: Image.file(photo),
-        ),
-      );
-    } else {
-      print('Camera cancelled');
-    }
-  }
+  final ImageService _imageService = ImageService();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _screens[_selectedIndex],
       floatingActionButton: FloatingActionButton(
-        onPressed: _openCamera,
+        onPressed: () {
+          _imageService.pickImage(context, ImageSource.camera);
+        },
         backgroundColor: Colors.green,
         child: const Icon(Icons.camera_alt),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
-        notchMargin: 8.0,
-        child: SizedBox(
-          height: 40,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              IconButton(
-                icon: Icon(Icons.home,
-                    color: _selectedIndex == 0 ? Colors.green : Colors.grey),
-                onPressed: () => _onItemTapped(0),
-              ),
-              const SizedBox(width: 40),
-              IconButton(
-                icon: Icon(Icons.history,
-                    color: _selectedIndex == 2 ? Colors.green : Colors.grey),
-                onPressed: () => _onItemTapped(2),
-              ),
-            ],
-          ),
+        notchMargin: 8,
+        height: 50,
+        padding: EdgeInsets.all(0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            IconButton(
+              icon: Icon(Icons.home,
+                  color: _selectedIndex == 0 ? Colors.green : Colors.grey),
+              onPressed: () => _onItemTapped(0),
+            ),
+            const SizedBox(width: 5),
+            IconButton(
+              icon: Icon(Icons.history,
+                  color: _selectedIndex == 2 ? Colors.green : Colors.grey),
+              onPressed: () => _onItemTapped(2),
+            ),
+          ],
         ),
       ),
     );
