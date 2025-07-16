@@ -63,7 +63,7 @@ class Home extends StatelessWidget {
                               )
                             ),
                             onPressed: () {
-                              _imageService.openImagePickerOptions(context);
+                              _imageService.openImagePickerOptions(context, _imageService);
                             },
                             child: Text(
                               'Diagnose your plant',

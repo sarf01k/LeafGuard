@@ -16,12 +16,12 @@ class DiseaseDetector {
     // Adjust input size as required by model (e.g. [1, 224, 224, 3])
     var input = imageInput.reshape([1, 224, 224, 3]);
     var output = List.filled(labels.length, 0.0).reshape([1, labels.length]);
-interpreter.run(input, output);
+    interpreter.run(input, output);
 
-final confidences = List<double>.from(output[0]);
-final maxValue = confidences.reduce((a, b) => a > b ? a : b);
-final predictedIndex = confidences.indexOf(maxValue);
+    final confidences = List<double>.from(output[0]);
+    final maxValue = confidences.reduce((a, b) => a > b ? a : b);
+    final predictedIndex = confidences.indexOf(maxValue);
 
-return labels[predictedIndex];
+    return labels[predictedIndex];
   }
 }

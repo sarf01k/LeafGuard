@@ -15,6 +15,8 @@ class ImageService {
   }
 
   Future<File?> pickImage(BuildContext context, ImageSource source) async {
+    final mounted = context.mounted;
+
     final permission = source == ImageSource.camera
         ? Permission.camera
         : (Platform.isAndroid
@@ -23,7 +25,7 @@ class ImageService {
 
     final status = await permission.request();
 
-    if (!context.mounted) return null;
+    if (!mounted || !context.mounted) return null;
 
     if (status.isDenied || status.isPermanentlyDenied) {
       if (Navigator.canPop(context)) Navigator.pop(context);
@@ -44,6 +46,7 @@ class ImageService {
     if (!context.mounted) return null;
 
     if (image != null) {
+      print('image');
       final File photo = File(image.path);
 
       // Navigate immediately; model will run in ResultScreen
@@ -56,36 +59,49 @@ class ImageService {
 
       return photo;
     }
-
+print("no image bro");
     return null;
   }
 
-  void openImagePickerOptions(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
-      ),
-      builder: (context) => Wrap(
+  void openImagePickerOptions(BuildContext parentContext, ImageService imageService) {
+  showModalBottomSheet(
+    context: parentContext,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+    ),
+    builder: (BuildContext sheetContext) {
+      return Wrap(
         children: [
           ListTile(
             leading: const Icon(Icons.camera_alt),
             title: const Text('Take Photo'),
-            onTap: () {
-              Navigator.pop(context);
-              pickImage(context, ImageSource.camera);
+            onTap: () async {
+              Navigator.pop(sheetContext); // Close bottom sheet
+              await Future.delayed(Duration(milliseconds: 200)); // Let sheet fully close
+              if (parentContext.mounted) {
+                await imageService.pickImage(parentContext, ImageSource.camera);
+              } else {
+                print('no cont');
+              }
             },
           ),
           ListTile(
             leading: const Icon(Icons.photo_library),
             title: const Text('Choose from Gallery'),
-            onTap: () {
-              Navigator.pop(context);
-              pickImage(context, ImageSource.gallery);
+            onTap: () async {
+              Navigator.pop(sheetContext);
+              await Future.delayed(Duration(milliseconds: 200));
+              if (parentContext.mounted) {
+                await imageService.pickImage(parentContext, ImageSource.gallery);
+              } else {
+                print('no cont');
+              }
             },
           ),
         ],
-      ),
-    );
-  }
+      );
+    },
+  );
+}
+
 }
