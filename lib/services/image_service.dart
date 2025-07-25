@@ -46,7 +46,6 @@ class ImageService {
     if (!context.mounted) return null;
 
     if (image != null) {
-      print('image');
       final File photo = File(image.path);
 
       // Navigate immediately; model will run in ResultScreen
@@ -59,7 +58,6 @@ class ImageService {
 
       return photo;
     }
-print("no image bro");
     return null;
   }
 
@@ -81,7 +79,6 @@ print("no image bro");
               if (parentContext.mounted) {
                 await imageService.pickImage(parentContext, ImageSource.camera);
               } else {
-                print('no cont');
               }
             },
           ),
@@ -94,7 +91,6 @@ print("no image bro");
               if (parentContext.mounted) {
                 await imageService.pickImage(parentContext, ImageSource.gallery);
               } else {
-                print('no cont');
               }
             },
           ),

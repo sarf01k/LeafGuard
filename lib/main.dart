@@ -7,12 +7,15 @@ import 'package:leafguard/screens/home_screen.dart';
 import 'package:leafguard/services/image_service.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
     ),
   );
+
   runApp(const LeafGuard());
 }
 
