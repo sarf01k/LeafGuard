@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:leafguard/services/disease_detector.dart';
 import 'package:leafguard/utils/image_utils.dart';
-import 'package:pdf/widgets.dart' as pw;
-import 'package:permission_handler/permission_handler.dart';
+import 'package:leafguard/utils/pdf_utils.dart';
 
 class ResultScreen extends StatefulWidget {
   final File image;
@@ -49,91 +48,6 @@ class _ResultScreenState extends State<ResultScreen> {
     }
   }
 
-  Future<void> _saveAsPdf() async {
-    try {
-      final status = await Permission.storage.request();
-      if (!status.isGranted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Storage permission denied")),
-        );
-        return;
-      }
-
-      final pdf = pw.Document();
-      final imageBytes = await widget.image.readAsBytes();
-      final pdfImage = pw.MemoryImage(imageBytes);
-
-      pdf.addPage(
-        pw.Page(
-          build: (pw.Context context) => pw.Column(
-            crossAxisAlignment: pw.CrossAxisAlignment.start,
-            children: [
-              pw.Center(child: pw.Image(pdfImage, height: 250)),
-              pw.SizedBox(height: 20),
-              if (treatmentDetails != null) ...[
-                pw.Text(
-                  treatmentDetails!['name'] ?? '',
-                  style: pw.TextStyle(
-                    fontSize: 24,
-                    fontWeight: pw.FontWeight.bold,
-                  ),
-                ),
-                pw.SizedBox(height: 10),
-                _buildPdfRich("Treatment: ", treatmentDetails!['treatment']),
-                pw.SizedBox(height: 5),
-                _buildPdfRich("Chemical Control: ", treatmentDetails!['chemical']),
-                pw.SizedBox(height: 5),
-                _buildPdfRich("Application: ", treatmentDetails!['application']),
-                pw.SizedBox(height: 5),
-                _buildPdfRich("Organic Options: ", treatmentDetails!['organic']),
-              ]
-            ],
-          ),
-        ),
-      );
-
-      final dir = Directory('/storage/emulated/0/Download');
-      if (!await dir.exists()) {
-        await dir.create(recursive: true);
-      }
-
-      String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
-
-      final file = File("${dir.path}/${treatmentDetails!['name']}_$timestamp.pdf");
-
-      await file.writeAsBytes(await pdf.save());
-
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("PDF saved to ${file.path}")),
-        );
-      }
-    } catch (e) {
-      debugPrint("PDF generation failed: $e");
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Failed to save PDF")),
-        );
-      }
-    }
-  }
-
-  pw.Widget _buildPdfRich(String label, String? value) {
-    final lines = (value ?? 'N/A').split('\n');
-    return pw.RichText(
-      text: pw.TextSpan(
-        children: [
-          pw.TextSpan(
-            text: label,
-            style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-          ),
-          pw.TextSpan(
-            text: lines.join('\n'),
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget buildDetails() {
     if (treatmentDetails == null) {
@@ -171,11 +85,11 @@ class _ResultScreenState extends State<ResultScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Diagnosis Result")),
+      appBar: AppBar(title: Text("Diagnosis Result")),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16),
         child: isLoading
-            ? const Center(child: CircularProgressIndicator())
+            ? Center(child: CircularProgressIndicator())
             : SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -198,12 +112,20 @@ class _ResultScreenState extends State<ResultScreen> {
               ),
       ),
       floatingActionButton: isLoading
-          ? null
-          : FloatingActionButton.extended(
-              onPressed: _saveAsPdf,
-              icon: const Icon(Icons.picture_as_pdf),
-              label: const Text("Save as PDF"),
-            ),
+    ? null
+    : FloatingActionButton.extended(
+        onPressed: () {
+          if (treatmentDetails != null) {
+            PdfSaver.saveDiagnosisPdf(
+              context: context,
+              imageFile: widget.image,
+              treatmentDetails: treatmentDetails!,
+            );
+          }
+        },
+        icon: const Icon(Icons.picture_as_pdf),
+        label: const Text("Save as PDF"),
+      ),
     );
   }
 }
