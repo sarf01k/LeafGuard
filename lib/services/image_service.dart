@@ -65,14 +65,26 @@ class ImageService {
   showModalBottomSheet(
     context: parentContext,
     shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+      borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
     ),
     builder: (BuildContext sheetContext) {
       return Wrap(
         children: [
           ListTile(
-            leading: const Icon(Icons.camera_alt),
-            title: const Text('Take Photo'),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.camera_alt),
+                SizedBox(width: 8),
+                const Text(
+                  'Take Photo',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500
+                  )
+                ),
+              ],
+            ),
             onTap: () async {
               Navigator.pop(sheetContext); // Close bottom sheet
               await Future.delayed(Duration(milliseconds: 200)); // Let sheet fully close
@@ -82,9 +94,22 @@ class ImageService {
               }
             },
           ),
+          Divider(),
           ListTile(
-            leading: const Icon(Icons.photo_library),
-            title: const Text('Choose from Gallery'),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.photo_library),
+                SizedBox(width: 8),
+                const Text(
+                  'Choose from Gallery',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500
+                  )
+                ),
+              ],
+            ),
             onTap: () async {
               Navigator.pop(sheetContext);
               await Future.delayed(Duration(milliseconds: 200));

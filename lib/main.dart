@@ -59,32 +59,45 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       body: _screens[_selectedIndex],
       floatingActionButton: FloatingActionButton(
+        shape: CircleBorder(),
         onPressed: () {
           _imageService.pickImage(context, ImageSource.camera);
         },
-        backgroundColor: Colors.green,
+        backgroundColor: const Color(0xFF228B22),
+        foregroundColor: Colors.white,
         child: const Icon(Icons.camera_alt),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
+        color: const Color(0xFFE6F4EA),
         shape: const CircularNotchedRectangle(),
-        notchMargin: 8,
-        height: 50,
-        padding: EdgeInsets.all(0),
+        height: 60,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            IconButton(
-              icon: Icon(Icons.home,
-                  color: _selectedIndex == 0 ? Colors.green : Colors.grey),
-              onPressed: () => _onItemTapped(0),
+            SizedBox(
+              width: 48,
+              height: 48,
+              child: IconButton(
+                iconSize: 30,
+                icon: Icon(Icons.home_rounded,
+                    color: _selectedIndex == 0 ? const Color(0xFF228B22) : const Color(0xFFA8A8A8)),
+                onPressed: () => _onItemTapped(0),
+                padding: EdgeInsets.zero,
+              ),
             ),
             const SizedBox(width: 5),
-            IconButton(
-              icon: Icon(Icons.history,
-                  color: _selectedIndex == 2 ? Colors.green : Colors.grey),
-              onPressed: () => _onItemTapped(2),
+            SizedBox(
+              width: 48,
+              height: 48,
+              child: IconButton(
+                iconSize: 30,
+                icon: Icon(Icons.history_rounded,
+                    color: _selectedIndex == 2 ? const Color(0xFF228B22) : const Color(0xFFA8A8A8)),
+                onPressed: () => _onItemTapped(2),
+                padding: EdgeInsets.zero,
+              ),
             ),
           ],
         ),
