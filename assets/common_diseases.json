@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Leaf Spot",
+    "info": "Leaf Spot is a common fungal or bacterial disease that causes spots on plant leaves.",
+    "symptoms": [
+      "Small brown, black, or yellow spots on leaves",
+      "Premature leaf drop",
+      "Spots may merge and kill larger leaf areas"
+    ],
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/%27Cercospora_capsici.jpg/500px-%27Cercospora_capsici.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Hibiscus_Bacterial_leaf_spot_caused_by_Pseudomonas_cichorii_%285684575818%29.jpg/500px-Hibiscus_Bacterial_leaf_spot_caused_by_Pseudomonas_cichorii_%285684575818%29.jpg"
+    ],
+    "treatment": "Remove affected leaves, improve air circulation, and apply a fungicide.",
+    "affectable_plants": ["Tomato", "Pepper", "Rose", "Cucumber"]
+  },
+  {
+    "name": "Blight",
+    "info": "Blight is a fast-spreading disease that causes browning and death of plant tissues.",
+    "symptoms": [
+      "Spots or lesions on fruits",
+      "Sudden browning or blackening of foliage",
+      "Wilting and dieback of stems"
+    ],
+    "images": [
+      "https://example.com/images/blight_2.jpg",
+      "https://www.greenlife.co.ke/wp-content/uploads/2022/04/Late-Blight-Tomatoes.jpg"
+    ],
+    "treatment": "Use resistant varieties, prune infected parts, and apply copper-based fungicides.",
+    "affectable_plants": ["Potato", "Tomato", "Apple", "Bean"]
+  },
+  {
+    "name": "Powdery Mildew",
+    "info": "Powdery Mildew is a fungal disease that appears as a white powder on plant surfaces.",
+    "symptoms": [
+      "White or gray powdery spots on leaves and stems",
+      "Reduced plant vigor",
+      "Curling or distorted leaves"
+    ],
+    "images": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Oidio_Plantas.jpg/500px-Oidio_Plantas.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/UncinulaNecatorOnGrapes.jpg/500px-UncinulaNecatorOnGrapes.jpg"
+    ],
+    "treatment": "Apply sulfur-based fungicides and increase airflow around plants.",
+    "affectable_plants": ["Zucchini", "Grapes", "Pumpkin", "Rose"]
+  },
+  {
+    "name": "Rust",
+    "info": "Rust is a fungal disease that produces rust-colored spores on the underside of leaves.",
+    "symptoms": [
+      "Rust-colored pustules on leaves",
+      "Premature leaf drop",
+      "Leaf distortion and yellowing"
+    ],
+    "images": [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMzzN1yldrqWeVvR2zqTie5XjCho3CE0D4lA&s",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjCmyjssAlG4BGXMSEsONCMTnO0xWKSs2y0Q&s"
+    ],
+    "treatment": "Remove infected leaves, avoid overhead watering, and use fungicides.",
+    "affectable_plants": ["Bean", "Rose", "Wheat", "Snapdragon"]
+  }
+]

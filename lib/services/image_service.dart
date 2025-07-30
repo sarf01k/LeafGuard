@@ -80,17 +80,16 @@ class ImageService {
                   'Take Photo',
                   style: TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.w500
+                    fontWeight: FontWeight.w600
                   )
                 ),
               ],
             ),
             onTap: () async {
-              Navigator.pop(sheetContext); // Close bottom sheet
-              await Future.delayed(Duration(milliseconds: 200)); // Let sheet fully close
+              Navigator.pop(sheetContext);
+              // await Future.delayed(Duration(milliseconds: 200));
               if (parentContext.mounted) {
                 await imageService.pickImage(parentContext, ImageSource.camera);
-              } else {
               }
             },
           ),
@@ -105,17 +104,16 @@ class ImageService {
                   'Choose from Gallery',
                   style: TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.w500
+                    fontWeight: FontWeight.w600
                   )
                 ),
               ],
             ),
             onTap: () async {
               Navigator.pop(sheetContext);
-              await Future.delayed(Duration(milliseconds: 200));
+              // await Future.delayed(Duration(milliseconds: 200));
               if (parentContext.mounted) {
                 await imageService.pickImage(parentContext, ImageSource.gallery);
-              } else {
               }
             },
           ),

@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:leafguard/screens/capture_screen.dart';
+import 'package:leafguard/screens/articles_screen.dart';
+import 'package:leafguard/screens/downloads_screen.dart';
 import 'package:leafguard/screens/history_screen.dart';
 import 'package:leafguard/screens/home_screen.dart';
 import 'package:leafguard/services/image_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await dotenv.load(fileName: ".env");
+
+  // debug sake
+  // final prefs = await SharedPreferences.getInstance();
+  // await prefs.clear();
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -24,8 +34,11 @@ class LeafGuard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: MainScreen(),
+    return MaterialApp(
+      theme: ThemeData(
+        textTheme: GoogleFonts.poppinsTextTheme(),
+      ),
+      home: const MainScreen(),
     );
   }
 }
@@ -42,8 +55,9 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _screens = [
     Home(),
-    CaptureScreen(),
+    ArticlesScreen(),
     HistoryScreen(),
+    DownloadsScreen()
   ];
 
   void _onItemTapped(int index) {
@@ -63,43 +77,71 @@ class _MainScreenState extends State<MainScreen> {
         onPressed: () {
           _imageService.pickImage(context, ImageSource.camera);
         },
-        backgroundColor: const Color(0xFF228B22),
-        foregroundColor: Colors.white,
+        backgroundColor: const Color(0xFF21d660),
+        foregroundColor: const Color(0xFF2E2E2E),
         child: const Icon(Icons.camera_alt),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomAppBar(
-        color: const Color(0xFFE6F4EA),
-        shape: const CircularNotchedRectangle(),
-        height: 60,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 48,
-              height: 48,
-              child: IconButton(
-                iconSize: 30,
-                icon: Icon(Icons.home_rounded,
-                    color: _selectedIndex == 0 ? const Color(0xFF228B22) : const Color(0xFFA8A8A8)),
-                onPressed: () => _onItemTapped(0),
-                padding: EdgeInsets.zero,
+      bottomNavigationBar: ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
+        ),
+        child: BottomAppBar(
+          color: const Color(0xFFffffff),
+          shape: const CircularNotchedRectangle(),
+          // height: 60,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    IconButton(
+                      iconSize: 30,
+                      icon: Icon(
+                        Icons.home_rounded,
+                        color: _selectedIndex == 0 ? const Color(0xFF2E2E2E) : const Color(0xFFA8A8A8),
+                      ),
+                      onPressed: () => _onItemTapped(0),
+                      padding: EdgeInsets.zero,
+                    ),
+                    IconButton(
+                      iconSize: 30,
+                      icon: Icon(Icons.article_rounded,
+                          color: _selectedIndex == 1 ? const Color(0xFF2E2E2E) : const Color(0xFFA8A8A8)),
+                      onPressed: () => _onItemTapped(1),
+                      padding: EdgeInsets.zero,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(width: 5),
-            SizedBox(
-              width: 48,
-              height: 48,
-              child: IconButton(
-                iconSize: 30,
-                icon: Icon(Icons.history_rounded,
-                    color: _selectedIndex == 2 ? const Color(0xFF228B22) : const Color(0xFFA8A8A8)),
-                onPressed: () => _onItemTapped(2),
-                padding: EdgeInsets.zero,
+              SizedBox(width: 30),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    IconButton(
+                      iconSize: 30,
+                      icon: Icon(Icons.history_rounded,
+                          color: _selectedIndex == 2 ? const Color(0xFF2E2E2E) : const Color(0xFFA8A8A8)),
+                      onPressed: () => _onItemTapped(2),
+                      padding: EdgeInsets.zero,
+                    ),
+                    IconButton(
+                      iconSize: 30,
+                      icon: Icon(Icons.download_rounded,
+                          color: _selectedIndex == 3 ? const Color(0xFF2E2E2E) : const Color(0xFFA8A8A8)),
+                      onPressed: () => _onItemTapped(3),
+                      padding: EdgeInsets.zero,
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

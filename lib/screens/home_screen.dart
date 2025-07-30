@@ -11,14 +11,25 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF228B22),
-        title: Text(
-          'LeafGuard',
-        ),
-        titleTextStyle: TextStyle(
-          fontSize: 28,
-          fontWeight: FontWeight.w600
+      backgroundColor: const Color(0xFFF5F5F5),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(80), // Increase AppBar height
+        child: AppBar(
+          backgroundColor: const Color(0xFF21d660),
+          flexibleSpace: Align(
+            alignment: Alignment.bottomLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 18.0, bottom: 16.0),
+              child: Text(
+                'LeafGuard',
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -31,7 +42,7 @@ class Home extends StatelessWidget {
                 '🌿 Let\'s check your plant!',
                 style: TextStyle(
                   fontSize: 22,
-                  fontWeight: FontWeight.w500
+                  fontWeight: FontWeight.w600
                 )
               ),
               const SizedBox(height: 20),
@@ -41,7 +52,7 @@ class Home extends StatelessWidget {
                   textAlign: TextAlign.start,
                   style: TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.w400
+                    fontWeight: FontWeight.w500
                   )
                 ),
               ),
@@ -49,7 +60,7 @@ class Home extends StatelessWidget {
                 margin: EdgeInsets.symmetric(vertical: 12),
                 padding: EdgeInsets.all(24),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF228B22),
+                  color: const Color(0xFFFFFFFF),
                   borderRadius: BorderRadius.circular(18)
                 ),
                 child: Column(
@@ -57,9 +68,9 @@ class Home extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        InstructionStep(stepNumber: '1', stepName: 'Capture', stepIcon: Icons.center_focus_strong_rounded),
+                        InstructionStep(stepNumber: '1', stepName: 'Capture', stepIcon: Icons.center_focus_strong_outlined),
                         InstructionStep(stepNumber: '2', stepName: 'Analyze', stepIcon: Icons.remove_red_eye_outlined),
-                        InstructionStep(stepNumber: '3', stepName: 'Recommendations', stepIcon: Icons.medication)
+                        InstructionStep(stepNumber: '3', stepName: 'Treatment', stepIcon: Icons.medication_outlined)
                       ],
                     ),
                     Container(
@@ -67,8 +78,9 @@ class Home extends StatelessWidget {
                       margin: EdgeInsets.only(top: 24),
                       child: ElevatedButton(
                         style: ButtonStyle(
+                          elevation: WidgetStatePropertyAll(0),
                           padding: WidgetStateProperty.all(EdgeInsets.all(12)),
-                          backgroundColor: WidgetStateProperty.all(const Color(0xFFFAFAFA)),
+                          backgroundColor: WidgetStateProperty.all(const Color(0xFF21d660)),
                           shape: WidgetStatePropertyAll(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18),
@@ -78,13 +90,20 @@ class Home extends StatelessWidget {
                         onPressed: () {
                           _imageService.openImagePickerOptions(context, _imageService);
                         },
-                        child: Text(
-                          '🔍 Diagnose Your Plant',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500
-                          ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.medical_services_rounded, color:Colors.black),
+                            SizedBox(width: 8),
+                            Text(
+                              'Diagnose Your Plant',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600
+                              ),
+                            ),
+                          ],
                         )
                       ),
                     )
@@ -95,7 +114,7 @@ class Home extends StatelessWidget {
                 '💡 Tip: Make sure the image is well-lit and focused for best results.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 16,
                   color: Colors.black,
                   fontWeight: FontWeight.w400
                 ),
@@ -105,7 +124,7 @@ class Home extends StatelessWidget {
                 '🦠 Some Common Diseases:',
                 style: TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               SizedBox(height: 12),
@@ -114,16 +133,16 @@ class Home extends StatelessWidget {
                 child: Column(
                   children: [
                     DiseaseCard(
-                      title: 'Leaf Spot',
+                      title: 'Leaf Spot', imageUrl: 'assets/images/leaf_spot_main.jpg', symptoms: 'Small brown, black, or yellow spots on leaves',
                     ),
                     DiseaseCard(
-                      title: 'Blight',
+                      title: 'Blight', imageUrl: 'assets/images/blight_main.jpg', symptoms: 'Spots or lesions on fruits',
                     ),
                     DiseaseCard(
-                      title: 'Powdery Mildew',
+                      title: 'Powdery Mildew', imageUrl: 'assets/images/powdery_mildew_main.jpg', symptoms: 'White or gray powdery spots on leaves and stems',
                     ),
                     DiseaseCard(
-                      title: 'Rust',
+                      title: 'Rust', imageUrl: 'assets/images/rust_main.jpg', symptoms: 'Rust-colored pustules on leaves',
                     ),
                   ],
                 )

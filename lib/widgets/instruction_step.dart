@@ -17,18 +17,18 @@ class InstructionStep extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 25,
-          height: 25,
+          width: 20,
+          height: 20,
           decoration: BoxDecoration(
-            color: const Color(0xFFFAFAFA),
+            color: const Color(0xFF2E2E2E),
             shape: BoxShape.circle,
           ),
           alignment: Alignment.center,
           child: Text(
             stepNumber,
             style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.green
+              fontWeight: FontWeight.w400,
+              color: const Color(0xFFFFFFFF)
             ),
           ),
         ),
@@ -36,16 +36,17 @@ class InstructionStep extends StatelessWidget {
           margin: EdgeInsets.symmetric(vertical: 20),
           child: Icon(
             stepIcon,
-            color: const Color(0xFFFAFAFA),
-            size: 50
+            color: const Color(0xFF2E2E2E),
+            size: 40,
+            weight: 300,
           ),
         ),
         Text(
           stepName,
           style: TextStyle(
-            color: const Color(0xFFFAFAFA),
-            fontSize: 12,
-            fontWeight: FontWeight.bold
+            color: const Color(0xFF2E2E2E),
+            fontSize: 14,
+            fontWeight: FontWeight.w400
           )
         )
       ],
