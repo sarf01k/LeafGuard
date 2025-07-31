@@ -7,6 +7,7 @@ import 'package:shimmer/shimmer.dart';
 
 class CachedImage extends StatelessWidget {
   final String imageUrl;
+  final double? height;
 
   final customCacheManager = CacheManager(
     Config(
@@ -18,7 +19,7 @@ class CachedImage extends StatelessWidget {
 
   CachedImage({
     super.key,
-    required this.imageUrl,
+    required this.imageUrl, this.height,
   });
 
   @override
@@ -26,7 +27,7 @@ class CachedImage extends StatelessWidget {
     return CachedNetworkImage(
       imageUrl: imageUrl,
       cacheManager: customCacheManager,
-      height: 200,
+      height: height ?? 200,
       width: double.infinity,
       fit: BoxFit.cover,
       placeholder: (context, url) => _buildImageShimmer(),

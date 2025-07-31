@@ -1,10 +1,12 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:leafguard/screens/article_detail_screen.dart';
 import 'package:leafguard/services/articles_service.dart';
 import 'package:leafguard/utils/convert_date.dart';
 import 'package:leafguard/widgets/cached_network_image.dart';
 import 'package:leafguard/widgets/shimmers.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ArticlesScreen extends StatefulWidget {
   const ArticlesScreen({super.key});
@@ -26,6 +28,7 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF5F5F5),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80), // Increase AppBar height
         child: AppBar(
@@ -77,6 +80,7 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
                       },
                     );
                   } else if (snapshot.hasError) {
+                    print(snapshot.error);
                     return SizedBox(
                       height: MediaQuery.of(context).size.height * 0.7,
                       child: Center(
@@ -137,40 +141,56 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
                         final article = articles[index];
                         return Column(
                           children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: CachedImage(
-                                imageUrl: article['image'],
-                              ),
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              article['title'],
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    convertDate(article['publishedAt']),
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      color: Color(0xFF7A7A7A)
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => ArticleDetailScreen(article: article),
+                                  ),
+                                );
+                              },
+                              child: Column(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(12),
+                                    child: CachedImage(
+                                      imageUrl: article['image_url'],
                                     ),
                                   ),
-                                ),
-                                IconButton(
-                                  color: Color(0xFF7A7A7A),
-                                  padding: EdgeInsets.zero,
-                                  onPressed: () {},
-                                  icon: Icon(Icons.share_rounded)
-                                )
-                              ],
+                                  SizedBox(height: 8),
+                                  Text(
+                                    article['description'],
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          convertDate(article['pubDate']),
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            color: Color(0xFF7A7A7A)
+                                          ),
+                                        ),
+                                      ),
+                                      IconButton(
+                                        color: Color(0xFF7A7A7A),
+                                        padding: EdgeInsets.zero,
+                                        onPressed: () {
+                                          Share.share('Check out this article: ${article['link']}');
+                                        },
+                                        icon: Icon(Icons.share_rounded)
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                             if (index != articles.length - 1) ...[
                               Divider(),

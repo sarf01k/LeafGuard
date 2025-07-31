@@ -8,24 +8,32 @@ Future<List<dynamic>> fetchArticlesOncePerDay() async {
   final today = DateTime.now().toIso8601String().split('T')[0];
   final lastFetchedDate = prefs.getString('lastFetchedDate');
 
-  if (lastFetchedDate == today) {
+  final isSameDay = lastFetchedDate == today;
+
+  if (isSameDay) {
     final cached = prefs.getString('cachedArticles');
     if (cached != null) return jsonDecode(cached);
     return [];
   }
 
-  final url = dotenv.env['ARTICLES_API'];
-  final res = await http.get(Uri.parse(url!));
+  final url = dotenv.env['ARTICLES_API_1'];
+  if (url == null || url.isEmpty) {
+    throw Exception("Missing ARTICLES_API_1 in .env file");
+  }
+
+  final uri = Uri.parse(url);
+
+  final res = await http.get(uri);
 
   if (res.statusCode == 200) {
     final json = jsonDecode(res.body);
-    final articles = json['articles'] ?? [];
+    final articles = json['results'] ?? [];
 
     await prefs.setString('lastFetchedDate', today);
     await prefs.setString('cachedArticles', jsonEncode(articles));
 
     return articles;
   } else {
-    throw Exception("Failed to fetch articles");
+    throw Exception("Failed to fetch articles: ${res.statusCode}");
   }
 }

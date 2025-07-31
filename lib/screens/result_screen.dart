@@ -19,6 +19,7 @@ class ResultScreen extends StatefulWidget {
 class _ResultScreenState extends State<ResultScreen> {
   String? result;
   bool isLoading = true;
+  bool isSaved = false;
   Map<String, dynamic>? treatmentDetails;
 
   @override
@@ -49,114 +50,6 @@ class _ResultScreenState extends State<ResultScreen> {
     }
   }
 
-  Widget _buildInfoSection(String label, String? value) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12.0),
-      child: RichText(
-        text: TextSpan(
-          style: Theme.of(context).textTheme.bodyMedium,
-          children: [
-            TextSpan(
-              text: value?.isNotEmpty == true ? value : 'N/A',
-              style: const TextStyle(fontWeight: FontWeight.w400),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildDetails() {
-    if (treatmentDetails == null) {
-      return const Center(child: Text('No treatment information available.'));
-    }
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          // crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(Icons.smart_toy_outlined, size: 16),
-            SizedBox(width: 8),
-            RichText(
-              text: TextSpan(
-                style: Theme.of(context).textTheme.bodyMedium,
-                children: [
-                  TextSpan(
-                    text: 'AI Diagnosis: ',
-                    style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w400),
-                  ),
-                  TextSpan(
-                    text: treatmentDetails!['name'] ?? result ?? '',
-                    style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 20),
-        Text(
-          "Treatment Description",
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.black,
-            fontWeight: FontWeight.w600
-          ),
-        ),
-        _buildInfoSection('Treatment', treatmentDetails!['treatment']),
-        const SizedBox(height: 10),
-        Text(
-          "Chemical Control & Application",
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.black,
-            fontWeight: FontWeight.w600
-          ),
-        ),
-        RichText(
-          text: TextSpan(
-            style: Theme.of(context).textTheme.bodyMedium,
-            children: [
-              TextSpan(
-                text: 'Recommended Chemical: ',
-                style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w400),
-              ),
-              TextSpan(
-                text: '${treatmentDetails!['chemical']}\n',
-                style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
-              ),
-              TextSpan(
-                text: 'Organic Options: ',
-                style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w400),
-              ),
-              TextSpan(
-                text: treatmentDetails!['organic'],
-                style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 10),
-        _buildInfoSection('Application', treatmentDetails!['application']),
-        // _buildInfoSection('Organic Options', treatmentDetails!['organic']),
-      ],
-    );
-  }
-
-  Widget buildImage() {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(12),
-      child: Image.file(
-        widget.image,
-        height: 250,
-        width: double.infinity,
-        fit: BoxFit.cover,
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -167,18 +60,17 @@ class _ResultScreenState extends State<ResultScreen> {
         toolbarHeight: 80,
         titleSpacing: 0,
         leading: Padding(
-          padding: const EdgeInsets.only(top: 18.0, left: 8.0),
-          child: Container(
-            // width: 40,
-            // height: 40,
-            decoration: BoxDecoration(
-              color: const Color(0xFF2E2E2E),
-              shape: BoxShape.circle,
-            ),
-            child: Center(
+          padding: const EdgeInsets.only(left: 12.0, top: 16),
+          child: SizedBox(
+            width: 24,
+            height: 24,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Color(0xFF2E2E2E), // Background color
+                shape: BoxShape.circle, // Or use borderRadius for rounded rectangle
+              ),
               child: IconButton(
-                padding: EdgeInsets.zero,
-                icon: Icon(Icons.arrow_back_ios_new_rounded, color: const Color(0xFF21d660), size: 18),
+                icon: Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF21D660), size: 20),
                 onPressed: () => Navigator.pop(context),
               ),
             ),
@@ -195,107 +87,86 @@ class _ResultScreenState extends State<ResultScreen> {
               color: Colors.black,
             ),
           ),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(top: 18.0, right: 8.0),
-            child: Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: const Color(0xFF2E2E2E),
-                shape: BoxShape.circle,
-              ),
-              child: Center(
-                child: IconButton(
-                  padding: EdgeInsets.zero,
-                  icon: Icon(Icons.more_horiz_rounded, color: const Color(0xFF21d660), size: 18),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ),
-            ),
-          ),
-        ],
+        )
       ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: isLoading
-                ? Column(
-                    children: [
-                      Shimmer.fromColors(
-                        baseColor: Color(0xFFE0E0E0),
-                        highlightColor: Color(0xFFF5F5F5),
-                        period: Durations.medium3,
-                        child: Container(
-                          height: 250,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: isLoading
+            ? Column(
+                children: [
+                  Shimmer.fromColors(
+                    baseColor: Color(0xFFE0E0E0),
+                    highlightColor: Color(0xFFF5F5F5),
+                    period: Durations.medium3,
+                    child: Container(
+                      height: 250,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      const SizedBox(height: 24),
-                      Shimmer.fromColors(
-                        baseColor: Color(0xFFE0E0E0),
-                        highlightColor: Color(0xFFF5F5F5),
-                        period: Durations.medium3,
-                        child: Container(
-                          height: 200,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                : Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      buildImage(),
-                      const SizedBox(height: 20),
-                      buildDetails(),
-                      const SizedBox(height: 60),
-                    ],
+                    ),
                   ),
-          ),
-        ],
+                  const SizedBox(height: 24),
+                  Shimmer.fromColors(
+                    baseColor: Color(0xFFE0E0E0),
+                    highlightColor: Color(0xFFF5F5F5),
+                    period: Durations.medium3,
+                    child: Container(
+                      height: 200,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            : Column(
+                children: [
+                  buildImage(widget.image),
+                  const SizedBox(height: 20),
+                  buildDetails(context, treatmentDetails),
+                  const SizedBox(height: 60),
+                ],
+              ),
       ),
-      floatingActionButton: SizedBox(
+      floatingActionButton: !isLoading ? SizedBox(
         width: double.infinity,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
+              disabledBackgroundColor: const Color(0xFF388E3C),
               backgroundColor: Color(0xFFD32F2F),
               padding: const EdgeInsets.symmetric(vertical: 14),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            onPressed: () {
-              if (treatmentDetails != null) {
-                PdfSaver.saveDiagnosisPdf(
+            onPressed: isSaved
+              ? null
+              : () async {
+                await PdfSaver.saveDiagnosisPdf(
                   context: context,
                   imageFile: widget.image,
                   treatmentDetails: treatmentDetails!,
                 );
-              }
-            },
+                setState(() {
+                  isSaved = true;
+                });
+              },
             icon: Icon(Icons.picture_as_pdf_rounded, size: 25, color: Colors.white),
             label: Text(
-              'Save as PDF',
+              isSaved ? 'Saved!' : 'Save as PDF',
               style: TextStyle(
                 color: Colors.white,fontWeight: FontWeight.w600
               ),
             ),
           ),
         ),
-      ),
+      ) : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }

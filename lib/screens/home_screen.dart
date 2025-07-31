@@ -38,13 +38,6 @@ class Home extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                '🌿 Let\'s check your plant!',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w600
-                )
-              ),
               const SizedBox(height: 20),
               Center(
                 child: Text(
