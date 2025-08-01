@@ -55,7 +55,7 @@ class _ResultScreenState extends State<ResultScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF21d660),
+        backgroundColor: const Color(0xFF388E3C),
         elevation: 1,
         toolbarHeight: 80,
         titleSpacing: 0,
@@ -66,11 +66,11 @@ class _ResultScreenState extends State<ResultScreen> {
             height: 24,
             child: Container(
               decoration: BoxDecoration(
-                color: Color(0xFF2E2E2E), // Background color
-                shape: BoxShape.circle, // Or use borderRadius for rounded rectangle
+                color: Color(0xFF2E2E2E),
+                shape: BoxShape.circle,
               ),
               child: IconButton(
-                icon: Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF21D660), size: 20),
+                icon: Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF388E3C), size: 20),
                 onPressed: () => Navigator.pop(context),
               ),
             ),

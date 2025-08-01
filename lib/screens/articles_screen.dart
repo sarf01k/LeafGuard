@@ -32,7 +32,7 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80), // Increase AppBar height
         child: AppBar(
-          backgroundColor: const Color(0xFF21d660),
+          backgroundColor: const Color(0xFF388E3C),
           title: null, // Disable default title
           flexibleSpace: Align(
             alignment: Alignment.bottomLeft, // Bottom left alignment
@@ -62,7 +62,6 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return ListView.builder(
-                      // padding: EdgeInsets.all(16),
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: shimmerCount,
@@ -80,7 +79,6 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
                       },
                     );
                   } else if (snapshot.hasError) {
-                    print(snapshot.error);
                     return SizedBox(
                       height: MediaQuery.of(context).size.height * 0.7,
                       child: Center(
@@ -155,12 +153,12 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(12),
                                     child: CachedImage(
-                                      imageUrl: article['image_url'],
+                                      imageUrl: article['image'],
                                     ),
                                   ),
                                   SizedBox(height: 8),
                                   Text(
-                                    article['description'],
+                                    article['title'],
                                     style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w600,
@@ -172,7 +170,7 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
                                       Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          convertDate(article['pubDate']),
+                                          convertDate(article['publishedAt']),
                                           style: TextStyle(
                                             fontWeight: FontWeight.w600,
                                             color: Color(0xFF7A7A7A)
@@ -183,7 +181,7 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
                                         color: Color(0xFF7A7A7A),
                                         padding: EdgeInsets.zero,
                                         onPressed: () {
-                                          Share.share('Check out this article: ${article['link']}');
+                                          Share.share('Check out this article: ${article['url']}');
                                         },
                                         icon: Icon(Icons.share_rounded)
                                       )

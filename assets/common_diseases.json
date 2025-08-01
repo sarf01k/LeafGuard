@@ -8,11 +8,20 @@
       "Spots may merge and kill larger leaf areas"
     ],
     "images": [
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/%27Cercospora_capsici.jpg/500px-%27Cercospora_capsici.jpg",
+      "assets/images/leaf_spot_main.jpg",
       "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Hibiscus_Bacterial_leaf_spot_caused_by_Pseudomonas_cichorii_%285684575818%29.jpg/500px-Hibiscus_Bacterial_leaf_spot_caused_by_Pseudomonas_cichorii_%285684575818%29.jpg"
     ],
     "treatment": "Remove affected leaves, improve air circulation, and apply a fungicide.",
-    "affectable_plants": ["Tomato", "Pepper", "Rose", "Cucumber"]
+    "chemical_control": "Use copper-based or chlorothalonil fungicides.",
+    "organic_control": "Apply neem oil or compost tea sprays.",
+    "spread_method": "Spread through splashing water, wind, and contaminated tools.",
+    "prevention": [
+      "Avoid overhead watering",
+      "Water early in the day",
+      "Keep leaves dry",
+      "Use disease-free seeds"
+    ],
+    "vulnerable_plants": ["Tomato", "Pepper", "Rose", "Cucumber"]
   },
   {
     "name": "Blight",
@@ -23,11 +32,20 @@
       "Wilting and dieback of stems"
     ],
     "images": [
-      "https://example.com/images/blight_2.jpg",
+      "assets/images/blight_main.jpg",
       "https://www.greenlife.co.ke/wp-content/uploads/2022/04/Late-Blight-Tomatoes.jpg"
     ],
     "treatment": "Use resistant varieties, prune infected parts, and apply copper-based fungicides.",
-    "affectable_plants": ["Potato", "Tomato", "Apple", "Bean"]
+    "chemical_control": "Spray with mancozeb or copper fungicides.",
+    "organic_control": "Use baking soda solution or compost tea.",
+    "spread_method": "Spreads rapidly in wet, humid conditions through rain splash and wind.",
+    "prevention": [
+      "Rotate crops annually",
+      "Avoid wetting foliage",
+      "Use certified disease-free seeds",
+      "Ensure proper spacing for airflow"
+    ],
+    "vulnerable_plants": ["Potato", "Tomato", "Apple", "Bean"]
   },
   {
     "name": "Powdery Mildew",
@@ -38,11 +56,20 @@
       "Curling or distorted leaves"
     ],
     "images": [
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Oidio_Plantas.jpg/500px-Oidio_Plantas.jpg",
+      "assets/images/powdery_mildew_main.jpg",
       "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/UncinulaNecatorOnGrapes.jpg/500px-UncinulaNecatorOnGrapes.jpg"
     ],
     "treatment": "Apply sulfur-based fungicides and increase airflow around plants.",
-    "affectable_plants": ["Zucchini", "Grapes", "Pumpkin", "Rose"]
+    "chemical_control": "Use sulfur or potassium bicarbonate sprays.",
+    "organic_control": "Apply milk spray (1:10 ratio) or neem oil.",
+    "spread_method": "Spreads via wind-blown spores, especially in dry, warm climates.",
+    "prevention": [
+      "Avoid overhead irrigation",
+      "Provide good air circulation",
+      "Water in the morning",
+      "Remove and destroy infected plant parts"
+    ],
+    "vulnerable_plants": ["Zucchini", "Grapes", "Pumpkin", "Rose"]
   },
   {
     "name": "Rust",
@@ -53,10 +80,19 @@
       "Leaf distortion and yellowing"
     ],
     "images": [
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMzzN1yldrqWeVvR2zqTie5XjCho3CE0D4lA&s",
+      "assets/images/rust_main.jpg",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjCmyjssAlG4BGXMSEsONCMTnO0xWKSs2y0Q&s"
     ],
     "treatment": "Remove infected leaves, avoid overhead watering, and use fungicides.",
-    "affectable_plants": ["Bean", "Rose", "Wheat", "Snapdragon"]
+    "chemical_control": "Apply myclobutanil or propiconazole fungicides.",
+    "organic_control": "Use sulfur dust or garlic extract spray.",
+    "spread_method": "Spreads through wind, water, and contaminated plant debris.",
+    "prevention": [
+      "Space plants properly",
+      "Avoid excessive nitrogen fertilizer",
+      "Water at base of plants",
+      "Remove plant debris regularly"
+    ],
+    "vulnerable_plants": ["Bean", "Rose", "Wheat", "Snapdragon"]
   }
 ]

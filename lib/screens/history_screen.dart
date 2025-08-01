@@ -10,7 +10,7 @@ class HistoryScreen extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80), // Increase AppBar height
         child: AppBar(
-          backgroundColor: const Color(0xFF21d660),
+          backgroundColor: const Color(0xFF388E3C),
           title: null, // Disable default title
           flexibleSpace: Align(
             alignment: Alignment.bottomLeft, // Bottom left alignment

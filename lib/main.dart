@@ -77,7 +77,7 @@ class _MainScreenState extends State<MainScreen> {
         onPressed: () {
           _imageService.pickImage(context, ImageSource.camera);
         },
-        backgroundColor: const Color(0xFF21d660),
+        backgroundColor: const Color(0xFF388E3C),
         foregroundColor: const Color(0xFF2E2E2E),
         child: const Icon(Icons.camera_alt),
       ),
@@ -90,7 +90,7 @@ class _MainScreenState extends State<MainScreen> {
         child: BottomAppBar(
           color: const Color(0xFFffffff),
           shape: const CircularNotchedRectangle(),
-          // height: 60,
+          height: 60,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.end,

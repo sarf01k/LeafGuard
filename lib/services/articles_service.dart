@@ -27,7 +27,7 @@ Future<List<dynamic>> fetchArticlesOncePerDay() async {
 
   if (res.statusCode == 200) {
     final json = jsonDecode(res.body);
-    final articles = json['results'] ?? [];
+    final articles = json['articles'] ?? [];
 
     await prefs.setString('lastFetchedDate', today);
     await prefs.setString('cachedArticles', jsonEncode(articles));
