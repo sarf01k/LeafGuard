@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:leafguard/services/disease_detector.dart';
@@ -25,14 +27,16 @@ class _ResultScreenState extends State<ResultScreen> {
   @override
   void initState() {
     super.initState();
-    _runModel();
+    Future.microtask(() => _runModel());
   }
 
   Future<void> _runModel() async {
     final detector = DiseaseDetector();
     await detector.loadModel();
 
-    final inputTensor = await processImage(await widget.image.readAsBytes());
+    final imageBytes = await widget.image.readAsBytes();
+
+    final inputTensor = await compute(processImageSync, imageBytes);
     final prediction = await detector.predict(inputTensor);
 
     final String jsonString =
@@ -92,36 +96,11 @@ class _ResultScreenState extends State<ResultScreen> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: isLoading
-            ? Column(
-                children: [
-                  Shimmer.fromColors(
-                    baseColor: Color(0xFFE0E0E0),
-                    highlightColor: Color(0xFFF5F5F5),
-                    period: Durations.medium3,
-                    child: Container(
-                      height: 250,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  Shimmer.fromColors(
-                    baseColor: Color(0xFFE0E0E0),
-                    highlightColor: Color(0xFFF5F5F5),
-                    period: Durations.medium3,
-                    child: Container(
-                      height: 200,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                  ),
-                ],
+            ? SizedBox(
+                height: MediaQuery.of(context).size.height * 0.7,
+                child: const Center(
+                  child: CupertinoActivityIndicator()
+                )
               )
             : Column(
                 children: [

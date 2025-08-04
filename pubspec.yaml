@@ -52,6 +52,7 @@ dependencies:
   share_plus: ^11.0.0
   open_file: ^3.5.10
   flutter_svg: ^2.2.0
+  flutter_native_splash: ^2.4.6
 
 dev_dependencies:
   flutter_test:
@@ -82,6 +83,16 @@ flutter:
     - assets/disease_data.json
     - .env
     - assets/common_diseases.json
+
+flutter_native_splash:
+  color: "#388E3C"
+  image: assets/images/LeafGuard.png
+  branding: assets/images/Branding.png
+  android_gravity: center
+  ios_content_mode: center
+  android_12:
+    image: assets/images/LeafGuard.png
+    icon_background_color: "#388E3C"
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

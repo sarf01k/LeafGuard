@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image/image.dart' as img;
 
 /// Converts a Uint8List image (e.g. from camera/gallery) into a Float32List for TFLite
-Future<Float32List> processImage(Uint8List rawBytes) async {
+Float32List processImageSync(Uint8List rawBytes) {
   final image = img.decodeImage(rawBytes);
   if (image == null) {
     throw Exception('Could not decode image');
@@ -18,7 +18,6 @@ Future<Float32List> processImage(Uint8List rawBytes) async {
   for (int y = 0; y < 224; y++) {
     for (int x = 0; x < 224; x++) {
       final pixel = resized.getPixel(x, y);
-
       imageAsFloat32[index++] = pixel.r / 255.0;
       imageAsFloat32[index++] = pixel.g / 255.0;
       imageAsFloat32[index++] = pixel.b / 255.0;

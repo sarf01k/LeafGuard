@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:leafguard/screens/articles_screen.dart';
 import 'package:leafguard/screens/downloads_screen.dart';
-import 'package:leafguard/screens/history_screen.dart';
+import 'package:leafguard/screens/tips_screen.dart';
 import 'package:leafguard/screens/home_screen.dart';
 import 'package:leafguard/services/image_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -56,7 +57,7 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> _screens = [
     Home(),
     ArticlesScreen(),
-    HistoryScreen(),
+    TipsScreen(),
     DownloadsScreen()
   ];
 
@@ -79,7 +80,11 @@ class _MainScreenState extends State<MainScreen> {
         },
         backgroundColor: const Color(0xFF388E3C),
         foregroundColor: const Color(0xFF2E2E2E),
-        child: const Icon(Icons.camera_alt),
+        child: SvgPicture.asset(
+          'assets/images/camera.svg',
+          height: 28,
+          width: 28,
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: ClipRRect(
@@ -99,44 +104,50 @@ class _MainScreenState extends State<MainScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    IconButton(
-                      iconSize: 30,
-                      icon: Icon(
-                        Icons.home_rounded,
-                        color: _selectedIndex == 0 ? const Color(0xFF2E2E2E) : const Color(0xFFA8A8A8),
+                    GestureDetector(
+                      onTap: () => _onItemTapped(0),
+                      child: SvgPicture.asset(
+                        'assets/images/home.svg',
+                        height: 32,
+                        width: 32,
+                        color: _selectedIndex == 0 ? const Color(0xFF388E3C) : const Color(0xFFA8A8A8),
                       ),
-                      onPressed: () => _onItemTapped(0),
-                      padding: EdgeInsets.zero,
                     ),
-                    IconButton(
-                      iconSize: 30,
-                      icon: Icon(Icons.article_rounded,
-                          color: _selectedIndex == 1 ? const Color(0xFF2E2E2E) : const Color(0xFFA8A8A8)),
-                      onPressed: () => _onItemTapped(1),
-                      padding: EdgeInsets.zero,
-                    ),
+                    GestureDetector(
+                      onTap: () => _onItemTapped(1),
+                      child: SvgPicture.asset(
+                        'assets/images/articles.svg',
+                        height: 32,
+                        width: 32,
+                        color: _selectedIndex == 1 ? const Color(0xFF388E3C) : const Color(0xFFA8A8A8),
+                      ),
+                    )
                   ],
                 ),
               ),
               SizedBox(width: 30),
               Expanded(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    IconButton(
-                      iconSize: 30,
-                      icon: Icon(Icons.history_rounded,
-                          color: _selectedIndex == 2 ? const Color(0xFF2E2E2E) : const Color(0xFFA8A8A8)),
-                      onPressed: () => _onItemTapped(2),
-                      padding: EdgeInsets.zero,
+                    GestureDetector(
+                      onTap: () => _onItemTapped(2),
+                      child: SvgPicture.asset(
+                        'assets/images/tips.svg',
+                        height: 32,
+                        width: 32,
+                        color: _selectedIndex == 2 ? const Color(0xFF388E3C) : const Color(0xFFA8A8A8),
+                      ),
                     ),
-                    IconButton(
-                      iconSize: 30,
-                      icon: Icon(Icons.download_rounded,
-                          color: _selectedIndex == 3 ? const Color(0xFF2E2E2E) : const Color(0xFFA8A8A8)),
-                      onPressed: () => _onItemTapped(3),
-                      padding: EdgeInsets.zero,
-                    ),
+                    GestureDetector(
+                      onTap: () => _onItemTapped(3),
+                      child: SvgPicture.asset(
+                        'assets/images/downloads.svg',
+                        height: 32,
+                        width: 32,
+                        color: _selectedIndex == 3 ? const Color(0xFF388E3C) : const Color(0xFFA8A8A8),
+                      ),
+                    )
                   ],
                 ),
               ),

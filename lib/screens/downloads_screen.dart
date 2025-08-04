@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:leafguard/widgets/shimmers.dart';
 import 'package:open_file/open_file.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -97,7 +98,13 @@ class _DownloadsScreenState extends State<DownloadsScreen> {
                     return SizedBox(
                       height: MediaQuery.of(context).size.height * 0.7,
                       child: const Center(
-                        child: Text('Failed to load files.')
+                        child: Text(
+                          'Failed to load files.',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600
+                          )
+                        )
                       )
                     );
                   } else {
@@ -106,7 +113,13 @@ class _DownloadsScreenState extends State<DownloadsScreen> {
                       return SizedBox(
                         height: MediaQuery.of(context).size.height * 0.7,
                         child: const Center(
-                          child: Text('No PDF files found.')
+                          child: Text(
+                            'No PDF files found.',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600
+                            )
+                          )
                         ),
                       );
                     }
@@ -123,17 +136,26 @@ class _DownloadsScreenState extends State<DownloadsScreen> {
                             shadowColor: Colors.black.withOpacity(0.3),
                             borderRadius: BorderRadius.circular(16),
                             child: ListTile(
-                              minTileHeight: 100,
+                              minTileHeight: 80,
                               tileColor: Colors.white,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16),
                               ),
-                              leading: const Icon(
-                                Icons.picture_as_pdf,
-                                color: Color(0xFFD32F2F),
-                                size: 40,
+                              leading: SvgPicture.asset(
+                                'assets/images/document-text.svg',
+                                height: 40,
+                                width: 40,
+                                color: const Color(0xFFd54d57),
                               ),
-                              title: Text(fileName),
+                              title: Text(
+                                fileName,
+                                softWrap: true,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              trailing: IconButton(onPressed: () {}, icon: Icon(Icons.more_horiz_rounded)),
                               onTap: () {
                                 OpenFile.open('/storage/emulated/0/Download/LeafGuard/$fileName');
                               },
