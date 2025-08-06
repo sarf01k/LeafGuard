@@ -45,7 +45,7 @@ class DiseaseDetailScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              DiseaseCard(imageUrl: disease['images'][0], title: disease['name'], symptoms: disease['symptoms'][0], elevation: 0, bgColor: Color(0xFFE0E0E0).withOpacity(0.6)),
+              DiseaseCard(disease: disease, bgColor: Colors.grey.withOpacity(0.3), nav: false),
               SizedBox(height: 10),
               Row(
                 children: [

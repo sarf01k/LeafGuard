@@ -195,17 +195,7 @@ class _HomeState extends State<Home> {
                 itemCount: common.length,
                 itemBuilder: (context, index) {
                   final disease = common[index];
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => DiseaseDetailScreen(disease: disease),
-                        ),
-                      );
-                    },
-                    child: DiseaseCard(imageUrl: disease['images'][0], title: disease['name'], symptoms: disease['symptoms'][0])
-                  );
+                  return DiseaseCard(disease: disease, nav: true,);
                 },
               )
             ],

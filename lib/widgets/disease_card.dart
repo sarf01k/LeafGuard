@@ -1,18 +1,17 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:leafguard/screens/disease_detail_screen.dart';
 
 class DiseaseCard extends StatelessWidget {
-  final String title;
-  final String imageUrl;
-  final String symptoms;
+  final Map<String, dynamic> disease;
   final double? elevation;
   final Color? bgColor;
-  final Color? textColor;
+  final bool nav;
 
   const DiseaseCard({
     super.key,
-    required this.imageUrl, required this.title, required this.symptoms, this.elevation, this.bgColor, this.textColor,
+    this.elevation, this.bgColor, required this.disease, required this.nav,
   });
 
   @override
@@ -37,7 +36,7 @@ class DiseaseCard extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Image.asset(
-                    imageUrl,
+                    disease['images'][0],
                     height: double.infinity,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) =>
@@ -63,18 +62,16 @@ class DiseaseCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      title,
+                      disease['name'],
                       style: TextStyle(
-                        color: textColor,
                         fontWeight: FontWeight.w600,
                         fontSize: 18
                       ),
                     ),
                     SizedBox(height: 4),
                     Text(
-                      symptoms,
+                      disease['symptoms'][0],
                       style: TextStyle(
-                        color: textColor,
                         fontWeight: FontWeight.w400,
                         fontSize: 16
                       ),
@@ -83,7 +80,7 @@ class DiseaseCard extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 8),
-              textColor == null
+              nav == true
                 ? Expanded(
                     flex: 1,
                     child: Container(
@@ -92,7 +89,14 @@ class DiseaseCard extends StatelessWidget {
                         shape: BoxShape.circle,
                       ),
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => DiseaseDetailScreen(disease: disease),
+                            ),
+                          );
+                        },
                         iconSize: 18,
                         icon: Icon(Icons.arrow_forward_ios_rounded),
                         color: const Color(0xFF666666).withOpacity(0.8),
